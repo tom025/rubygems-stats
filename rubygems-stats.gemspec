@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 2.1.2"
 
   s.add_dependency 'gems', '~> 0.8.3'
+  s.add_dependency 'virtus', '~> 1.0.2'
 
   s.add_development_dependency 'rspec', '~> 2.14.1'
 
