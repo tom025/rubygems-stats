@@ -1,39 +1,41 @@
 require 'rubygems_stats'
-require 'support/fake_gem_repo'
+require 'rubygems_stats/gem'
 
 describe RubygemsStats do
-  let(:gem_repo) { Testing::FakeGemRepo.new }
 
   let(:rails) {
     RubygemsStats::Gem.new(
       :name => 'rails',
-      :downloads => 3
+      :downloads => 6
     )
   }
 
   let(:sinatra) {
     RubygemsStats::Gem.new(
       :name => 'sinatra',
-      :downloads => 2
+      :downloads => 4
     )
   }
 
   let(:cucumber) {
     RubygemsStats::Gem.new(
       :name => 'cucumber',
-      :downloads => 1
+      :downloads => 2
     )
   }
 
   let(:stats) { described_class.new }
   let(:download_stats) { stats.download_stats }
+  let(:gems_cache) {
+    RubygemsStats::InMemoryGemsCache.new.tap do |gems_cache|
+      gems_cache << rails
+      gems_cache << cucumber
+      gems_cache << sinatra
+    end
+  }
 
   before do
-    gem_repo << rails
-    gem_repo << cucumber
-    gem_repo << sinatra
-
-    described_class.gem_repo = gem_repo
+    described_class.gems_cache = gems_cache
   end
 
 
@@ -44,8 +46,10 @@ describe RubygemsStats do
     expect(download_stats.last).to eq cucumber
     expect(download_stats[1]).to eq sinatra
 
-    expect(download_stats.rank_of('rails')).to eq 3
-    expect(download_stats.rank_of('cucumber')).to eq 1
+    expect(download_stats.rank_of('rails')).to eq 1
+    expect(download_stats.rank_of('cucumber')).to eq 3
   end
 
 end
+
+

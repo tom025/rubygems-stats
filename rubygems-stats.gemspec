@@ -14,6 +14,10 @@ Gem::Specification.new do |s|
   s.add_dependency 'virtus', '~> 1.0.2'
 
   s.add_development_dependency 'rspec', '~> 2.14.1'
+  s.add_development_dependency 'webmock', '~> 1.17.4'
+  s.add_development_dependency 'vcr', '~> 2.9.0'
+  s.add_development_dependency 'unindent'
+  s.add_development_dependency 'pry'
 
   s.rubygems_version = ">= 1.6.1"
   s.files            = `git ls-files`.split("\n").reject {|path| path =~ /\.gitignore$/ }
